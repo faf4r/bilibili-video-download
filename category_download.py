@@ -93,14 +93,28 @@ if __name__ == '__main__':
     seasons_list_json = requests.get(url=series_list_url, headers=headers).json()
     seasons_list = seasons_list_json['data']['items_lists']['seasons_list']
 
+    # # 下载全部合集
+    # for season in seasons_list:
+    #     name = season['meta']['name']           # 合集名
+    #     total = season['meta']['total']         # 合集总视频数
+    #     season_id = season['meta']['season_id'] # 合集id
+    #     print(name)
+
+    #     download_season(season_id, name, total, 1)
+    #     for file in os.listdir(f'./video/{name}'):
+    #         file = file[:-4]
+    #         merge(f'./video/{name}/{file}.flv', f'./audio/{name}/{file}.mp3', f'./out/{name}/{file}.flv')
+
+    # 下载指定合集
     for season in seasons_list:
         name = season['meta']['name']           # 合集名
         total = season['meta']['total']         # 合集总视频数
         season_id = season['meta']['season_id'] # 合集id
+        if season_id not in [2130269]:  # 注意是int型
+            continue
         print(name)
 
         download_season(season_id, name, total, 1)
         for file in os.listdir(f'./video/{name}'):
             file = file[:-4]
             merge(f'./video/{name}/{file}.flv', f'./audio/{name}/{file}.mp3', f'./out/{name}/{file}.flv')
-
